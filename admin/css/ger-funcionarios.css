@@ -1,0 +1,11 @@
+.input-row {
+	margin-top: 5px;
+}
+
+fieldset {
+	margin-bottom: 10px;
+}
+
+#controls {
+	float: right;
+}
