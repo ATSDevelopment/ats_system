@@ -9,7 +9,8 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <img src="img/ats_logo.jpg" style="max-width:50px" />
+                <!--<img src="img/ats_logo.jpg" style="max-width:50px" />-->
+                ATS System
             </a>
         </div>
 
@@ -31,10 +32,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="index.php?page=gerenciar_funcionarios">Gerenciar Funcionários</a>
+                            <a href="funcionarios_listar.php">Gerenciar Funcionários</a>
                         </li>
                         <li>
-                            <a href="#">Gerenciar Projetos</a>
+                            <a href="projetos_listar.php">Gerenciar Projetos</a>
                         </li>
                         <li>
                             <a href="#">Gerenciar Clientes</a>

@@ -1,9 +1,9 @@
 <?php
-require "dao/funcionario_dao.class.php";
+require "dao/projeto_dao.class.php";
 
-$fdao = new funcionario_dao();
+$pdao = new projeto_dao();
 
-$funcionarios = $fdao->listar_funcionarios();
+$projetos = $pdao->listar_projetos();
 
 require "header.php";
 ?>
@@ -12,12 +12,12 @@ require "header.php";
 
 <fieldset id="funcionarios_list_content">
 
-<legend>Gerenciamento de Funcionários</legend>
+<legend>Gerenciamento de Projetos</legend>
 
 	<div id="fl-search" class="panel panel-default">
 		<div class="panel-body row">
 			<div class="col-lg-2">
-				<a href="funcionarios_editar.php" class="btn btn-sm btn-primary">Cadastrar Funcionário</a>
+				<a href="projetos_editar.php" class="btn btn-sm btn-primary">Cadastrar Projeto</a>
 			</div>
 			<div class="col-lg-10">
 				<div class="input-group input-group-sm">
@@ -38,41 +38,29 @@ require "header.php";
 				<th>#</th>
 				<th>Codigo</th>
 				<th>Nome</th>
-				<th>E-Mail</th>
-				<th>Telefone</th>
-				<th>Usuário</th>
-				<th>Ativo</th>
-				<th>Bloqueado</th>
+				<th>Status</th>
+				<th>Concluído</th>
 			</tr>
 			<?php
-			foreach ($funcionarios as $f) {
+			foreach ($projetos as $p) {
 				?>
 				<tr>
 					<td>
-						<a href="funcionarios_editar.php?cod_funcionario=<?=$f['codigo']?>">
+						<a href="projetos_editar.php?cod_projeto=<?=$p['codigo']?>">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 						</a>
 					</td>
 					<td>
-						<?=$f['codigo']?>
+						<?=$p['codigo']?>
 					</td>
 					<td>
-						<?=$f['nome_completo']?>
+						<?=$p['nome']?>
 					</td>
 					<td>
-						<?=$f['e_mail']?>
+						<?=$p['status']?>
 					</td>
 					<td>
-						<?=$f['telefone']?>
-					</td>
-					<td>
-						<?=$f['nome_de_usuario']?>
-					</td>
-					<td>
-						<?=$f['ativo'] ? 'sim':'não'?>
-					</td>
-					<td>
-						<?=$f['bloqueado'] ? 'sim':'não'?>
+						<?=$p['concluido']?>
 					</td>
 				</tr>
 				<?php

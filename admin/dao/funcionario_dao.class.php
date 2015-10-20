@@ -1,12 +1,24 @@
 <?php
 class funcionario_dao {
+	function deletar_funcionario($cod){
+		require "db_connect.php";
+
+		$prepared = $mysqli->prepare("UPDATE funcionarios SET deletado_em=NOW() WHERE codigo=?");
+		$prepared->bind_param("i", $cod);
+		$prepared->execute();
+		$prepared->close();
+	}
 	function salvar_funcionario($f){
-		echo "1";
-		if($f['codigo'] == 0){
-			$this->salvar($f);
+
+		$cod = $f['codigo'];
+
+		if($cod == 0){
+			$cod = $this->salvar($f);
 		}else{
 			$this->atualizar($f);
 		}
+
+		return $cod;
 	}
 	function salvar($f){
 		require "db_connect.php";
@@ -26,8 +38,8 @@ class funcionario_dao {
 		$prepared->fetch();
 		$prepared->close();
 
-		$prepared=$mysqli->prepare("INSERT INTO funcionarios SET nome_completo=?, e_mail=?, telefone=?, observacoes=?, cod_usuario=?");
-		$prepared->bind_param("ssssi", $f['nome_completo'], $f['e_mail'], $f['telefone'], $f['observacoes'], $cod_usuario);
+		$prepared=$mysqli->prepare("INSERT INTO funcionarios SET nome_completo=?, e_mail=?, telefone=?, ativo=?, observacoes=?, cod_usuario=?");
+		$prepared->bind_param("sssisi", $f['nome_completo'], $f['e_mail'], $f['telefone'], $f['ativo'], $f['observacoes'], $cod_usuario);
 		$prepared->execute();
 		$prepared->close();
 
@@ -48,6 +60,8 @@ class funcionario_dao {
 		$prepared->close();*/
 
 		$mysqli->close();
+
+		return $cod_funcionario;
 	}
 	function atualizar($f){
 		require "db_connect.php";
@@ -63,6 +77,7 @@ class funcionario_dao {
 			f.nome_completo=?, 
 			f.e_mail=?, 
 			f.telefone=?, 
+			f.ativo=?,
 			f.observacoes=?, 
 			u.nome_de_usuario=?,
 			u.senha=?,
@@ -75,11 +90,13 @@ class funcionario_dao {
 		WHERE
 			f.codigo = ?
 		";
+
 		$prepared = $mysqli->prepare($query);
-		$prepared->bind_param("ssssssiiiiiii", 
+		$prepared->bind_param("sssisssiiiiiii", 
 			$f['nome_completo'],
 			$f['e_mail'],
 			$f['telefone'],
+			$f['ativo'],
 			$f['observacoes'],
 			$f['nome_de_usuario'],
 			$f['senha'],
@@ -106,6 +123,7 @@ class funcionario_dao {
 			f.nome_completo, 
 			f.e_mail, 
 			f.telefone, 
+			f.ativo, 
 			f.observacoes, 
 			u.nome_de_usuario, 
 			u.senha, 
@@ -127,7 +145,7 @@ class funcionario_dao {
 
 		$prepared->execute();
 
-		$prepared->bind_result($nome_completo, $e_mail, $telefone, $observacoes, $nome_de_usuario,
+		$prepared->bind_result($nome_completo, $e_mail, $telefone, $ativo, $observacoes, $nome_de_usuario,
 			$senha, $bloqueado, $ger_func, $ger_proj, $ger_down, $ger_cli, $ger_not);
 
 		$f = null;
@@ -137,6 +155,7 @@ class funcionario_dao {
 			$f['codigo'] = $codigo;
 			$f['nome_completo'] = $nome_completo;
 			$f['e_mail'] = $e_mail;
+			$f['ativo'] = $ativo;
 			$f['telefone'] = $telefone;
 			$f['observacoes'] = $observacoes;
 			$f['nome_de_usuario'] = $nome_de_usuario;
@@ -169,6 +188,7 @@ class funcionario_dao {
 			f.nome_completo,
 			f.e_mail,
 			f.telefone,
+			f.ativo,
 			u.nome_de_usuario,
 			u.bloqueado
 			FROM
@@ -181,7 +201,7 @@ class funcionario_dao {
 
 		$prepared->execute();
 
-		$prepared->bind_result($codigo, $nome_completo, $e_mail, $telefone, $nome_de_usuario, $bloqueado);
+		$prepared->bind_result($codigo, $nome_completo, $e_mail, $telefone, $ativo, $nome_de_usuario, $bloqueado);
 
 		$result = array();
 
@@ -191,6 +211,7 @@ class funcionario_dao {
 			$f['nome_completo'] = $nome_completo;
 			$f['e_mail'] = $e_mail;
 			$f['telefone'] = $telefone;
+			$f['ativo']= $ativo;
 			$f['nome_de_usuario'] = $nome_de_usuario;
 			$f['bloqueado'] = $bloqueado;
 

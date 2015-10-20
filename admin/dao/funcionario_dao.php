@@ -9,8 +9,6 @@ if(array_key_exists("op", $_GET)){
 		case "deletar_funcionario":
 		break;
 	}
-	$cod = $_GET['cod_funcionario'];
-	Header("Location: ../funcionarios_editar.php?cod_funcionario=$cod");
 }
 
 function salvar_funcionario(){
@@ -19,6 +17,8 @@ function salvar_funcionario(){
 	$f['nome_completo'] = $_POST['nome_completo'];
 	$f['e_mail'] = $_POST['e_mail'];
 	$f['telefone'] = $_POST['telefone'];
+	$f['ativo'] = array_key_exists("ativo", $_POST);
+	$f['observacoes'] = str_replace("\r", "", str_replace("\n", '', $_POST['observacoes']));
 	$f['nome_de_usuario'] = $_POST['usuario'];
 	$f['senha'] = $_POST['senha'];
 	$f['bloqueado'] = array_key_exists("bloqueado", $_POST);
@@ -34,10 +34,17 @@ function salvar_funcionario(){
 	$f['permissoes'] = $p;
 
 	$fdao = new funcionario_dao();
-	$fdao->salvar_funcionario($f);
+	$cod = $fdao->salvar_funcionario($f);
+
+	Header("Location: ../funcionarios_editar.php?cod_funcionario=$cod");
 }
 
 function deletar_funcionario(){
+	$cod = $_GET['cod_funcionario'];
 
+	$fdao = new funcionario_dao();
+	$fdao->deletar_funcionario($cod);
+
+	Header("Location: ../funcionarios_listar.php");
 }
 ?>

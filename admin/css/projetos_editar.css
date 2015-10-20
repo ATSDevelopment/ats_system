@@ -1,0 +1,20 @@
+#p_editor {
+	width: 80%;
+	margin: 0 auto;
+}
+
+fieldset {
+	padding-bottom: 30px;
+}
+
+.input_row {
+	margin-bottom: 20px;
+}
+
+#con_sd {
+	float: right;
+}
+
+#con_ger {
+	float: middle;
+}
