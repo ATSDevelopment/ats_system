@@ -1,0 +1,19 @@
+.input_row {
+	margin-top: 5px;
+	text-align: right;
+}
+
+fieldset {
+	margin-bottom: 10px;
+}
+
+#controls {
+	text-align: left;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#f_editor {
+	width: 80%;
+	margin: 0 auto;
+}
