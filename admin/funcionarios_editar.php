@@ -157,7 +157,5 @@ if($f != null){
 
 	<?php
 }
-
 require "footer.php";
-
 ?>
