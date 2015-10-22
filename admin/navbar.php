@@ -55,6 +55,9 @@
                         Carlos Rodrigues <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="user_img">
+                            <img src="img/perfil/default.jpg">
+                        </li>
                         <li>
                             <a href="#">Editar Perfil</a>
                         </li>
