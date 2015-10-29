@@ -28,6 +28,14 @@ if(array_key_exists("confirm_refirect", $_GET)){
 	$confirm_refirect = $_GET['confirm_refirect'];
 }
 
+if(array_key_exists("default_text", $_GET)){
+	$default_text = $_GET['default_text'];
+}
+
+if(array_key_exists("confirm_text", $_GET)){
+	$confirm_text = $_GET['confirm_text'];
+}
+
 ?>
 
 <!DOCTYPE html>

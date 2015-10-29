@@ -1,17 +1,12 @@
-.input_row {
-	margin-top: 5px;
+#funcionarios_editar_body{
+	padding: 10px;
 }
 
-fieldset {
-	margin-bottom: 10px;
+.input_row {
+	padding-top: 5px;
 }
 
 #controls {
+	padding-top: 30px;
 	text-align: center;
-	margin-top: 20px;
-}
-
-#f_editor {
-	width: 80%;
-	margin: 0 auto;
 }

@@ -1,20 +1,15 @@
-#p_editor {
-	width: 80%;
-	margin: 0 auto;
-}
-
-fieldset {
-	padding-bottom: 30px;
+#projetos_editar_body {
+	padding: 10px;
 }
 
 .input_row {
-	margin-bottom: 20px;
+	padding-top: 5px;
 }
 
 #con_sd {
 	float: right;
 }
 
-#con_ger {
-	float: middle;
+#controls {
+	padding-top: 5px;
 }
