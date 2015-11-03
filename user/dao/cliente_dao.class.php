@@ -10,61 +10,100 @@ class cliente_dao {
 	function salvar($f){
 		require "db_connect.php";
 
-		/*$prepared = $mysqli->prepare("START TRANSACTION");
-		$prepared->execute();
-		$prepared->close();*/
+		$prepared = $mysqli->prepare("
+			SELECT 
+			u.codigo
+			FROM 
+			usuarios u
+			WHERE 
+			u.nome_de_usuario = ?");
 
-		$prepared = $mysqli->prepare("INSERT INTO usuarios SET nome_de_usuario=?, senha=?, bloqueado=false");
-		$prepared->bind_param("ss", $f['nome_de_usuario'], $f['senha']);
+		$prepared-> bind_param("s", $f['nome_de_usuario']);
 		$prepared->execute();
-		$prepared->close();
+		$prepared->bind_result($codigo);
 
-		$prepared = $mysqli->prepare("SELECT last_insert_id() FROM usuarios");
-		$prepared->execute();
-		$prepared->bind_result($cod_usuario);
-		$prepared->fetch();
-		$prepared->close();
+		
 
-		$prepared=$mysqli->prepare("INSERT INTO clientes SET nome_completo=?, cpf_cnpj=?, cod_usuario=?");
-		$prepared->bind_param("ssi", $f['nome_completo'], $f['cpf_cnpj'], $cod_usuario);
-		$prepared->execute();
-		$prepared->close();
+		if($prepared->fetch()){
 
-		/*$prepared = $mysqli->prepare("COMMIT");
-		$prepared->execute;
-		$prepared->close();*/
+			$resposta['existe'] = true;
+			$prepared->close();
+
+			echo "entrou aki";
+
+		}else{
+
+			echo "entrou aki tbm";
+
+
+			$resposta['existe'] = false;
+			$prepared->close();
+
+			$prepared = $mysqli->prepare("INSERT INTO usuarios SET nome_de_usuario=?, senha=?, bloqueado=false");
+			$prepared->bind_param("ss", $f['nome_de_usuario'], $f['senha']);
+			$prepared->execute();
+			$prepared->close();
+
+			$prepared = $mysqli->prepare("SELECT last_insert_id() FROM usuarios");
+			$prepared->execute();
+			$prepared->bind_result($cod_usuario);
+			$prepared->fetch();
+			$prepared->close();
+
+			$prepared=$mysqli->prepare("INSERT INTO clientes SET nome_completo=?, cpf_cnpj=?, cod_usuario=?");
+			$prepared->bind_param("ssi", $f['nome_completo'], $f['cpf_cnpj'], $cod_usuario);
+			$prepared->execute();
+			$prepared->close();
+
+		}
 
 		$mysqli->close();
+
+		$resposta['salvar'] = true;
+
+		return $resposta;
 	}
 	function logar($f){
 
 
 		require "db_connect.php";
 
+		session_start();
+
 		$prepared = $mysqli->prepare("
 			SELECT 
-			nome_de_usuario, 
-			senha 
+			u.codigo,
+			u.nome_de_usuario, 
+			c.codigo,
+			c.nome_completo
 			FROM 
-			usuarios 
+			usuarios u
+			join clientes c
+			on u.codigo = c.cod_usuario
 			WHERE 
-			nome_de_usuario = ?
-			AND 
-			senha = ?");
+			u.nome_de_usuario = ?
+			AND 	
+			u.senha =?");
 
 		$prepared-> bind_param("ss", $f['usuario'], $f['senha']);
 
 		$prepared->execute();
 
-		$prepared->bind_result(
-		$usuario, $senha);
+		$prepared->bind_result($codigo, $usuario, $codigo_cli, $nome_cliente);
 
 		$f = null;
 
 		if($prepared->fetch()){
 			$f = array();
+			$f['codigo'] = $codigo;
 			$f['usuario'] = $usuario;
-			$f['senha'] = $senha;
+
+			$_SESSION["id_usuario"]= $codigo;
+			$_SESSION["nome_usuario"] = $usuario;
+			$_SESSION["cod_cli"] = $codigo_cli;
+			$_SESSION["nome_cli"] = $nome_cliente;
+
+
 		}
 
 		$prepared->close();
@@ -76,53 +115,44 @@ class cliente_dao {
 
 
 	}
-	/*function atualizar($f){
+	function atualizar($f){
 		require "db_connect.php";
 
 		$query = "
 		UPDATE 
-			funcionarios f 
-			join usuarios u 
-				on u.codigo = f.cod_usuario 
-			join permissoes p 
-				on p.cod_funcionario = f.codigo 
+		clientes c 
+		join usuarios u 
+		on u.codigo = c.cod_usuario 
 		SET 
-			f.nome_completo=?, 
-			f.e_mail=?, 
-			f.telefone=?, 
-			f.observacoes=?, 
-			u.nome_de_usuario=?,
-			u.senha=?,
-			u.bloqueado=?,
-			p.gerenciar_funcionarios=?,
-			p.gerenciar_projetos=?,
-			p.gerenciar_downloads=?,
-			p.gerenciar_clientes=?,
-			p.gerenciar_noticias=?
+		c.nome_completo=?, 
+		c.cpf_cnpj=?,  
+		u.nome_de_usuario=?,
+		u.senha=?
 		WHERE
-			f.codigo = ?
+		c.codigo = ?
 		";
 		$prepared = $mysqli->prepare($query);
-		$prepared->bind_param("ssssssiiiiiii", 
+		$prepared->bind_param("ssssi", 
 			$f['nome_completo'],
-			$f['e_mail'],
-			$f['telefone'],
-			$f['observacoes'],
+			$f['cpf_cnpj'],
 			$f['nome_de_usuario'],
 			$f['senha'],
-			$f['bloqueado'],
-			$f['permissoes']['gf'],
-			$f['permissoes']['gp'],
-			$f['permissoes']['gd'],
-			$f['permissoes']['gc'],
-			$f['permissoes']['gn'],
 			$f['codigo']
-		);
+			);
 
 		$prepared->execute();
 		$prepared->close();
 
+		session_start();
+
+		$_SESSION["nome_usuario"] = $f['nome_de_usuario'];
+		$_SESSION["nome_cli"] = $f['nome_completo'];
+
 		$mysqli->close();
+
+		$resposta['existe'] = false;
+		$resposta['salvar'] = false;
+		return $resposta;
 	}
 
 	function obter_por_codigo($codigo){
@@ -130,54 +160,33 @@ class cliente_dao {
 
 		$prepared = $mysqli->prepare("
 			SELECT 
-			f.nome_completo, 
-			f.e_mail, 
-			f.telefone, 
-			f.observacoes, 
+			c.nome_completo, 
+			c.cpf_cnpj, 
 			u.nome_de_usuario, 
-			u.senha, 
-			u.bloqueado, 
-			p.gerenciar_funcionarios, 
-			p.gerenciar_projetos, 
-			p.gerenciar_downloads, 
-			p.gerenciar_clientes, 
-			p.gerenciar_noticias 
+			u.senha 
 			FROM 
-			funcionarios f 
+			clientes c 
 			join usuarios u 
-			on u.codigo = f.cod_usuario 
-			join permissoes p 
-			on p.cod_funcionario=f.codigo 
+			on u.codigo = c.cod_usuario 
 			WHERE 
-			f.codigo = $codigo 
+			c.codigo = $codigo 
 			");
 
 		$prepared->execute();
 
-		$prepared->bind_result($nome_completo, $e_mail, $telefone, $observacoes, $nome_de_usuario,
-			$senha, $bloqueado, $ger_func, $ger_proj, $ger_down, $ger_cli, $ger_not);
+		$prepared->bind_result($nome_completo, $cpf_cnpj, $nome_de_usuario, $senha);
 
 		$f = null;
 
 		if($prepared->fetch()){
+
 			$f = array();
 			$f['codigo'] = $codigo;
 			$f['nome_completo'] = $nome_completo;
-			$f['e_mail'] = $e_mail;
-			$f['telefone'] = $telefone;
-			$f['observacoes'] = $observacoes;
+			$f['cpf_cnpj'] = $cpf_cnpj;
 			$f['nome_de_usuario'] = $nome_de_usuario;
 			$f['senha'] = $senha;
-			$f['bloqueado'] = $bloqueado;
 
-			$p = array();
-			$p['gf'] = $ger_func;
-			$p['gp'] = $ger_proj;
-			$p['gd'] = $ger_down;
-			$p['gc'] = $ger_cli;
-			$p['gn'] = $ger_not;
-
-			$f['permissoes'] = $p;
 		}
 
 		$prepared->close();
@@ -186,7 +195,7 @@ class cliente_dao {
 
 		return $f;
 	}
-
+/*
 	function listar_funcionarios () {
 		require "db_connect.php";
 

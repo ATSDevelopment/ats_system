@@ -25,19 +25,13 @@ tinymce.init({
 							</legend>
 							<div class="row input_row">
 								<div class="col-lg-3"><label>Nome:</label></div>
-								<div class="col-lg-9"><input id="nome_cliente" name="nome_cliente" type="text" class="form-control" onKeyUp="verifica();"></div>
+								<div class="col-lg-9"><input id="nome_cliente" name="nome_cliente" type="text" class="form-control" onKeyUp="verifica();"></div>		
 							</div>
 							<div class="row input_row">
 								<div class="col-lg-3"><label>CPF/CNPJ:</label></div>
-								<div class="col-lg-9"><input id="cpf_cnpj" name="cpf_cnpj" type="text" class="form-control" onKeyUp="verifica();"></div>
+								<div class="col-lg-9"><input id="cpf_cnpj" name="cpf_cnpj" type="number" class="form-control" onKeyUp="verifica();"></div>
 							</div>
 						</fieldset>
-
-						<div id="controls">
-							<div class="btn-group" role="group" aria-label="..." id="btn_salvar">
-								<button type="submit" class="btn btn-primary" disabled>Salvar</button>
-							</div>
-						</div>
 					</div>
 
 					<div class="col-lg-6">
@@ -57,10 +51,23 @@ tinymce.init({
 								<div class="col-lg-4"><label id="r_label">Repetir Senha:  </span></label></div>
 								<div class="col-lg-8"><input id="r_senha" name="r_senha" type="password" class="form-control" onKeyUp="verifica();" ></div>
 							</div>
+
 						</fieldset>
 					</div>
+					<div id="controls">
+						<div class="btn-group" role="group" aria-label="..." id="btn_salvar">
+							<button type="submit" class="btn btn-primary" disabled>Salvar</button>
+						</div>
+					</div>
+					<?php
+					if(array_key_exists("exist", $_GET)){
+						$exist = $_GET['exist'];
+						if ($exist == "true") {
+							echo "<br><label style='color: red;'>Usuário Existente!</label>";
+						}
+					}
+					?>
 				</div>
-
 			</form>
 		</div>
 	</div>

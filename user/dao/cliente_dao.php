@@ -12,13 +12,10 @@ if(array_key_exists("op", $_GET)){
 		logar();
 		break;
 	}
-	if(array_key_exists("cod_cliente", $_GET)){
-	$cod = $_GET['cod_cliente'];
-	}
 }
 
 function salvar_cliente(){
-	Header("Location: ../login.php");
+	
 
 	$f = array();
 	$f['codigo'] = $_GET['cod_cliente'];
@@ -28,7 +25,18 @@ function salvar_cliente(){
 	$f['senha'] = $_POST['senha'];
 
 	$fdao = new cliente_dao();
-	$fdao->salvar_cliente($f);
+	$resposta = $fdao->salvar_cliente($f);
+
+	if ($resposta['existe'] = true) {
+		Header("Location: ../cadastro.php?exist=true");
+	}else{
+		if ($resposta['salvar'] != true) {
+			Header("Location: ../area_do_cliente.php?nav=projetos");
+		}else{
+			Header("Location: ../login.php");
+		}
+	}
+	
 }
 function logar(){
 	$f = array();
@@ -40,12 +48,9 @@ function logar(){
 	$resp = $fdao -> logar($f);
 
 	if($resp!=null){
-		echo "não é nulo";
 		Header("Location: ../area_do_cliente.php?nav=projetos");
-
 	}else{
 
-		echo "é nulo";
 		Header("Location: ../login.php?exist=false");
 	}
 }
