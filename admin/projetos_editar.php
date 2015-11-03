@@ -1,7 +1,4 @@
 <?php
-require "header.php";
-require "sidebar.php";
-
 $p = null;
 
 if(array_key_exists("cod_projeto", $_GET)){
@@ -11,13 +8,17 @@ if(array_key_exists("cod_projeto", $_GET)){
 	$p = $dao->obter_por_codigo($_GET['cod_projeto']);
 }
 
+$nav = "side_btn_p";
+require "header.php";
+require "sidebar.php";
 ?>
+
 <script src="vendor/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="js/projetos_editar.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/projetos_editar.css">
 
-<div id="projetos_editar_body">
+<div class="sub_body">
 	<fieldset>
 		<legend>Cadastro de Projetos</legend>
 		<div id="p_editor" class="panel panel-default">
@@ -50,12 +51,12 @@ if(array_key_exists("cod_projeto", $_GET)){
 						<a href="projetos_listar.php" class="btn btn-primary">Voltar</a>
 
 						<div id="con_ger" class="btn-group" role="group" aria-label="...">
-							<a href="#" class="btn btn-primary disabled">Gerenciar Tarefas</a>
+							<a id="btn_ger_tarefas" href="#" class="btn btn-primary disabled">Gerenciar Tarefas</a>
 							<a href="projetos_participantes.php?cod_projeto=<?=$p['codigo']?>" class="btn_unlock btn btn-primary disabled">Gerenciar Participantes</a>
 						</div>
 						<div id="con_sd" class="btn-group" role="group" aria-label="...">
-							<a href="#" class="btn_unlock btn btn-primary disabled">Deletar</a>
-							<a href="#" class="btn_unlock btn btn-primary disabled">Finalizar</a>
+							<a href="dao/projeto_dao.php?op=deletar_projeto&cod_projeto=<?=$p['codigo']?>" class="btn_unlock btn btn-primary disabled">Deletar</a>
+							<a id="btn_fr_projeto" href="#" class="btn_unlock btn btn-primary disabled">...</a>
 							<button type="submit" class="btn btn-primary">Salvar</button>
 						</div>
 					</div>
@@ -74,6 +75,27 @@ if($p != null){
 		document.form_projeto.status.value="<?=$p['status']?>";
 
 		$(".btn_unlock").toggleClass("disabled");
+
+		console.log("concluído: <?=$p['concluido']?>");
+		<?php
+		if(!$p['concluido']){
+			?>
+			$("#btn_fr_projeto").attr("href", "dao/projeto_dao.php?op=finalizar_projeto&cod_projeto=<?=$p['codigo']?>");
+			$("#btn_fr_projeto").html("Finalizar");
+			<?php
+		}else{
+			?>
+			$("#btn_fr_projeto").attr("href", "dao/projeto_dao.php?op=reabrir_projeto&cod_projeto=<?=$p['codigo']?>");
+			$("#btn_fr_projeto").html("Reabrir");
+			<?php
+		}
+
+		if($p['n_participantes'] > 0){
+			?>
+			$("#btn_ger_tarefas").toggleClass("disabled");
+			<?php
+		}
+		?>
 	</script>
 	<?php
 }

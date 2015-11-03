@@ -3,16 +3,21 @@ require "dao/funcionario_dao.class.php";
 
 $fdao = new funcionario_dao();
 
-$funcionarios = $fdao->listar_funcionarios();
+$search = null;
+$funcionarios = null;
 
+if(array_key_exists('search', $_GET)){
+	$search = $_GET['search'];
+}
+
+$funcionarios = $fdao->listar_funcionarios($search);
+
+$nav = "side_btn_f";
 require "header.php";
-
 require "sidebar.php";
 ?>
 
-<link rel="stylesheet" type="text/css" href="css/funcionarios_listar.css">
-<script type="text/javascript" src="js/funcionarios_listar.js"></script>
-<div id="funcionarios_listar_body">
+<div class="sub_body">
 	<fieldset>
 
 		<legend>Funcionários</legend>
@@ -23,12 +28,12 @@ require "sidebar.php";
 					<a href="funcionarios_editar.php" class="btn btn-sm btn-primary">Cadastrar Funcionário</a>
 				</div>
 				<div class="col-lg-10">
-					<div class="input-group input-group-sm">
-						<input type="text" class="form-control" placeholder="Digite sua busca aqui..." aria-describedby="sizing-addon3">
+					<form class="input-group input-group-sm">
+						<input name="search" type="text" class="form-control" placeholder="Digite sua busca aqui..." value="<?=$search?>">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">Procurar</button>
+							<button class="btn btn-default" type="submit">Procurar</button>
 						</span>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>

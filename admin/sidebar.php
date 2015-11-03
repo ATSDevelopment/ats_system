@@ -37,3 +37,7 @@
 
 	</ul>
 </div>
+
+<script>
+	$(".<?=$nav?>").toggleClass("option_active");
+</script>

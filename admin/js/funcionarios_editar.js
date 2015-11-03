@@ -1,5 +1,3 @@
-$(".side_btn_f").toggleClass("option_active");
-
 function preencher(f){
 	document.f_editor.nome_completo.value = f.nome_completo;
 	document.f_editor.e_mail.value = f.e_mail;

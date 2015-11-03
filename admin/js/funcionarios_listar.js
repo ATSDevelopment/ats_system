@@ -1,1 +1,0 @@
-$(".side_btn_f").toggleClass("option_active");

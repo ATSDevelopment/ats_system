@@ -3,18 +3,19 @@ require "dao/projeto_dao.class.php";
 
 $pdao = new projeto_dao();
 
-$projetos = $pdao->listar_projetos();
+$search = null;
+if(array_key_exists('search', $_GET)){
+	$search = $_GET['search'];
+}
 
+$projetos = $pdao->listar_projetos($search);
+
+$nav = "side_btn_p";
 require "header.php";
-
 require "sidebar.php";
 ?>
 
-<link rel="stylesheet" type="text/css" href="css/projetos_listar.css">
-
-<script type="text/javascript" src="js/projetos_listar.js"></script>
-
-<div id="projetos_listar_body">
+<div class="sub_body">
 	<fieldset>
 
 		<legend>Projetos</legend>
@@ -25,12 +26,12 @@ require "sidebar.php";
 					<a href="projetos_editar.php" class="btn btn-sm btn-primary">Cadastrar Projeto</a>
 				</div>
 				<div class="col-lg-10">
-					<div class="input-group input-group-sm">
-						<input type="text" class="form-control" placeholder="Digite sua busca aqui...">
+					<form class="input-group input-group-sm">
+						<input name="search" type="text" class="form-control" placeholder="Digite sua busca aqui...">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">Go!</button>
+							<button class="btn btn-default" type="submit">Buscar</button>
 						</span>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -64,7 +65,7 @@ require "sidebar.php";
 							<?=$p['status']?>
 						</td>
 						<td>
-							<?=$p['concluido']?>
+							<?=$p['concluido'] ? "sim":"não"?>
 						</td>
 					</tr>
 					<?php

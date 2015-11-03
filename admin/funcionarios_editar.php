@@ -1,4 +1,6 @@
 <?php
+$nav = "side_btn_f";
+
 require "header.php";
 require "sidebar.php";
 
@@ -26,7 +28,7 @@ if (array_key_exists("cod_funcionario", $_GET)) {
 <script src="vendor/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="js/funcionarios_editar.js"></script>
 
-<div id="funcionarios_editar_body">
+<div class="sub_body">
 	<fieldset>
 		<legend>Cadastro de Funcionário</legend>
 		<div id="f_editor" class="panel panel-default">
@@ -123,7 +125,7 @@ if (array_key_exists("cod_funcionario", $_GET)) {
 							<div id="controls">
 								<div class="btn-group">
 									<a href="funcionarios_listar.php" type="button" class="btn btn-primary">Voltar</a>
-									<a id="btn_deletar" href="dao/funcionario_dao.php?op=deletar_funcionario$cod_funcionario=<?=$f['codigo']?>" type="button" class="btn btn-primary">Deletar</a>
+									<a id="btn_deletar" href="dao/funcionario_dao.php?op=deletar_funcionario&cod_funcionario=<?=$f['codigo']?>" onclick="return confirm('Deletar realmente deletar o funcionário?')" class="btn btn-primary">Deletar</a>
 									<button type="submit" class="btn btn-primary">Salvar</button>
 								</div>
 							</div>

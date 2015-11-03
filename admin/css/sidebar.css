@@ -47,3 +47,7 @@ body {
 #sidebar ul hr {
 	width: 70%;
 }
+
+.sub_body {
+	padding: 10px;
+}

@@ -7,6 +7,10 @@ class funcionario_dao {
 		$prepared->bind_param("i", $cod);
 		$prepared->execute();
 		$prepared->close();
+
+		$mysqli->close();
+
+		echo "deletado!";
 	}
 	function salvar_funcionario($f){
 
@@ -179,10 +183,10 @@ class funcionario_dao {
 		return $f;
 	}
 
-	function listar_funcionarios () {
-		require "db_connect.php";
+	function listar_funcionarios($where){
+				require "db_connect.php";
 
-		$prepared = $mysqli->prepare("
+		$query = "
 			SELECT
 			f.codigo,
 			f.nome_completo,
@@ -197,8 +201,17 @@ class funcionario_dao {
 			on f.cod_usuario = u.codigo
 			WHERE 
 			f.deletado_em IS NULL
-			");
+			";
 
+		if($where != null){
+			$query = $query." AND (f.nome_completo LIKE '%$where%'";
+			$query = $query." OR f.e_mail LIKE '%$where%'";
+			$query = $query." OR f.telefone LIKE '%$where%'";
+			$query = $query." OR f.observacoes LIKE '%$where%'";
+			$query = $query." OR u.nome_de_usuario LIKE '%$where%')";
+		}
+
+		$prepared = $mysqli->prepare($query);
 		$prepared->execute();
 
 		$prepared->bind_result($codigo, $nome_completo, $e_mail, $telefone, $ativo, $nome_de_usuario, $bloqueado);

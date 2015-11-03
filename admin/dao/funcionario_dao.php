@@ -7,6 +7,7 @@ if(array_key_exists("op", $_GET)){
 		salvar_funcionario();
 		break;
 		case "deletar_funcionario":
+		deletar_funcionario();
 		break;
 	}
 }
@@ -51,7 +52,7 @@ function deletar_funcionario(){
 
 	$alert_title = "Sucesso!";
 	$alert_message = "Funcionário deletado com sucesso!";
-	$alert_redirect = "funcionarios_editar.php";
+	$alert_redirect = "funcionarios_listar.php";
 
 	Header("Location: ../alert.php?title=$alert_title&message=$alert_message&default_redirect=$alert_redirect");
 }
