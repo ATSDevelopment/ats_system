@@ -36,7 +36,11 @@ function salvar_funcionario(){
 	$fdao = new funcionario_dao();
 	$cod = $fdao->salvar_funcionario($f);
 
-	Header("Location: ../funcionarios_editar.php?cod_funcionario=$cod");
+	$alert_title = "Sucesso!";
+	$alert_message = "Funcionário salvo com sucesso!";
+	$alert_redirect = "funcionarios_editar.php?cod_funcionario=$cod";
+
+	Header("Location: ../alert.php?title=$alert_title&message=$alert_message&default_redirect=$alert_redirect");
 }
 
 function deletar_funcionario(){
@@ -45,6 +49,10 @@ function deletar_funcionario(){
 	$fdao = new funcionario_dao();
 	$fdao->deletar_funcionario($cod);
 
-	Header("Location: ../funcionarios_listar.php");
+	$alert_title = "Sucesso!";
+	$alert_message = "Funcionário deletado com sucesso!";
+	$alert_redirect = "funcionarios_editar.php";
+
+	Header("Location: ../alert.php?title=$alert_title&message=$alert_message&default_redirect=$alert_redirect");
 }
 ?>

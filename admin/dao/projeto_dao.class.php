@@ -1,5 +1,8 @@
 <?php
 class projeto_dao {
+	function listar_participantes(){
+		
+	}
 	function salvar_projeto($p){
 		if($p['codigo'] == 0){
 			return $this->salvar($p);
@@ -8,25 +11,24 @@ class projeto_dao {
 			
 			return $p['codigo'];
 		}
-		
 	}
 	function salvar($p){
 		require "db_connect.php";
 
 		$prepared = $mysqli->prepare("INSERT INTO projetos SET nome=?, descricao=?, status=?, concluido=FALSE");
 		$prepared->bind_param("sss", $p['nome'], $p['descricao'], $p['status']);
-
 		$prepared->execute();
 		$prepared->close();
 
 		$prepared = $mysqli->prepare("SELECT last_insert_id() FROM projetos");
 		$prepared->execute();
-		$prepared->bind_param($codigo);
+		$prepared->bind_result($cod_projeto);
 		$prepared->fetch();
 		$prepared->close();
+
 		$mysqli->close();
 
-		return $codigo;
+		return $cod_projeto;
 	}
 	function atualizar($p){
 		require "db_connect.php";
@@ -38,15 +40,6 @@ class projeto_dao {
 		$prepared->close();
 
 		$mysqli->close();
-		/*require "db_connect.php";
-
-		$prepared = $mysqli->prepare("UPDATE projetos SET nome=?, descricao=?, status=?, concluido=FALSE WHERE codigo=$p['codigo']");
-		$prepared->bind_param("sss", $p['nome'], $p['descricao'], $p['status']);
-
-		$prepared->execute();
-		$prepared->close();
-
-		$mysqli->close();	*/
 	}
 	function obter_por_codigo($codigo){
 		require "db_connect.php";

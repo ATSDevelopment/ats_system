@@ -1,5 +1,6 @@
 <?php
 require "header.php";
+require "sidebar.php";
 
 $p = null;
 
@@ -12,57 +13,57 @@ if(array_key_exists("cod_projeto", $_GET)){
 
 ?>
 <script src="vendor/tinymce/js/tinymce/tinymce.min.js"></script>
-<script type="text/javascript">
-	tinymce.init({
-		selector: "textarea"
-	});
-</script>
+<script src="js/projetos_editar.js"></script>
+
 <link rel="stylesheet" type="text/css" href="css/projetos_editar.css">
-<fieldset>
-	<legend>Cadastro de Projetos</legend>
-	<div id="p_editor" class="panel panel-default">
-		<div class="panel-body">
-			<form name="form_projeto" method="post" action="dao/projeto_dao.php?op=salvar_projeto&cod_projeto=<?=$p['codigo']?>">
-				<div class="row input_row">
-					<div class="col-lg-2">
-						<label>Nome do Projeto:</label>
-					</div>
-					<div class="col-lg-10">
-						<input name="nome" type="text" class="form-control" />
-					</div>
-				</div>
 
-				<div class="input_row">
-					<label>Descrição: </label>
-					<textarea name="descricao" rows="10"></textarea>
-				</div>
+<div id="projetos_editar_body">
+	<fieldset>
+		<legend>Cadastro de Projetos</legend>
+		<div id="p_editor" class="panel panel-default">
+			<div class="panel-body">
+				<form name="form_projeto" method="post" action="dao/projeto_dao.php?op=salvar_projeto&cod_projeto=<?=$p['codigo']?>">
+					<div class="row input_row">
+						<div class="col-lg-2">
+							<label>Nome do Projeto:</label>
+						</div>
+						<div class="col-lg-10">
+							<input name="nome" type="text" class="form-control" />
+						</div>
+					</div>
 
-				<div class="row input_row">
-					<div class="col-lg-1">
-						<label>Status:</label>
+					<div class="input_row">
+						<label>Descrição: </label>
+						<textarea name="descricao" rows="10"></textarea>
 					</div>
-					<div class="col-lg-11">
-						<input name="status" type="text" class="form-control" />
-					</div>
-				</div>
 
-				<div id="controls">
-					<a href="projetos_listar.php" class="btn btn-primary">Voltar</a>
+					<div class="row input_row">
+						<div class="col-lg-1">
+							<label>Status:</label>
+						</div>
+						<div class="col-lg-11">
+							<input name="status" type="text" class="form-control" />
+						</div>
+					</div>
 
-					<div id="con_ger" class="btn-group" role="group" aria-label="...">
-						<a href="#" class="btn btn-primary disabled">Gerenciar Tarefas</a>
-						<a href="#" class="btn_unlock btn btn-primary disabled">Gerenciar Participantes</a>
+					<div id="controls">
+						<a href="projetos_listar.php" class="btn btn-primary">Voltar</a>
+
+						<div id="con_ger" class="btn-group" role="group" aria-label="...">
+							<a href="#" class="btn btn-primary disabled">Gerenciar Tarefas</a>
+							<a href="projetos_participantes.php?cod_projeto=<?=$p['codigo']?>" class="btn_unlock btn btn-primary disabled">Gerenciar Participantes</a>
+						</div>
+						<div id="con_sd" class="btn-group" role="group" aria-label="...">
+							<a href="#" class="btn_unlock btn btn-primary disabled">Deletar</a>
+							<a href="#" class="btn_unlock btn btn-primary disabled">Finalizar</a>
+							<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>
 					</div>
-					<div id="con_sd" class="btn-group" role="group" aria-label="...">
-						<a href="#" class="btn_unlock btn btn-primary disabled">Deletar</a>
-						<a href="#" class="btn_unlock btn btn-primary disabled">Finalizar</a>
-						<button type="submit" class="btn btn-primary">Salvar</button>
-					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
-	</div>
-</fieldset>
+	</fieldset>
+</div>
 
 <?php
 if($p != null){
@@ -72,7 +73,7 @@ if($p != null){
 		document.form_projeto.descricao.value="<?=$p['descricao']?>";
 		document.form_projeto.status.value="<?=$p['status']?>";
 
-		$(".btn_unlock").attr("class", "btn_sd btn btn-primary");
+		$(".btn_unlock").toggleClass("disabled");
 	</script>
 	<?php
 }
