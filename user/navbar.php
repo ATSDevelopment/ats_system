@@ -19,20 +19,19 @@
     <li><a href="#">Downloads</a></li>
 </ul>
 <ul class="nav navbar-nav navbar-right">
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Área do Cliente <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <?php 
-        if (true) {
-            echo " <li><a href='area_do_cliente.php?nav=projetos'>Perfil</a></li>
-            <li role='separator' class='divider'></li>
-            <li><a href='logout.php'>Sair</a></li>";
-        }else{
-            echo "<li><a href='login.php'>Entrar</a></li>"; 
-        }
-        ?>
-    </ul>
-</li>
+
+    <?php 
+
+    session_start();
+
+    if ((isset ($_SESSION['id_usuario']) == true) and (isset ($_SESSION['nome_usuario']) == true)) {
+
+        echo " <li><a href='area_do_cliente.php?nav=projetos'>".$_SESSION['nome_cli']."</a></li>";
+        
+    }else{
+        echo "<li><a href='login.php'>Entrar</a></li>"; 
+    }
+    ?>
 </ul>
 </div><!-- /.navbar-collapse -->
 </div><!-- /.container-fluid -->

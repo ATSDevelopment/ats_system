@@ -28,7 +28,7 @@
               if(array_key_exists("exist", $_GET)){
                 $exist = $_GET['exist'];
                if ($exist == "false") {
-                echo "<br><label>Usuário não encontrado!</label>";
+                echo "<br><label  style='color: red;'>Usuário ou senha incorretos!</label>";
               }
             }
             ?>
