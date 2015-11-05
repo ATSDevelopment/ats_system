@@ -76,6 +76,7 @@ class Upload{
 	}
 	public function salvar(){
 
+		session_start();
 		$extensao = $this->getExtensao(); 
 
 			//gera um nome unico para a imagem em funcao do tempo 

@@ -47,7 +47,7 @@ $cod_cli = $_SESSION['cod_cli'];
 						</legend>
 						<div class="row input_row">
 							<div class="col-lg-4"><label>Usuário:</label></div>
-							<div class="col-lg-8"><input id="usuario" name="usuario" type="text" class="form-control" onKeyUp="verifica();"></div>
+							<div class="col-lg-8"><input disabled id="usuario" name="usuario" type="text" class="form-control" onKeyUp="verifica();"></div>
 						</div>
 						<div class="row input_row">
 							<div class="col-lg-4"><label>Senha:</label></div>
@@ -62,7 +62,7 @@ $cod_cli = $_SESSION['cod_cli'];
 
 				<div id="controls">
 					<div id="btn_salvar" class="btn-group" role="group" aria-label="...">
-						<button  type="submit" class="btn btn-primary" onClick="window.location.reload()">Salvar</button>
+						<button  type="submit" class="btn btn-primary" onClick="window.location.reload();">Salvar</button>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Alterar Foto</button>
 					</div>
 				</div>
@@ -78,7 +78,7 @@ $cod_cli = $_SESSION['cod_cli'];
 
 		<!-- Modal content-->
 		<div class="modal-content">
-			<form method='post' enctype='multipart/form-data'>
+			<form method='post' enctype='multipart/form-data' action="dao/cliente_dao.php?op=salvar_foto">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Alterar Foto</h4>
@@ -87,18 +87,18 @@ $cod_cli = $_SESSION['cod_cli'];
 					<input accept="image/jpeg" type='file' name='foto' value='Enviar Foto'>
 				</div>
 				<div class="modal-footer">
-					<input type="submit" name='submit' class="btn btn-default"  value="Salvar"/>
+					<input type="submit" name='submit' onClick="window.location.reload();" class="btn btn-default"  value="Salvar"/>
 				</div>
 			</form>
 
 			<?php	
-			include "dao/upload.class.php"; 
+			/*include "dao/upload.class.php"; 
 
 			if ((isset($_POST["submit"])) && (! empty($_FILES['foto']))){
-
+				
 				$upload = new Upload($_FILES['foto'], 1000, 800, "img/perfil/");
 				$upload->salvar(); 
-			} 
+			} */
 			?>
 
 
