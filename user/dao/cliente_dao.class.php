@@ -189,6 +189,48 @@ class cliente_dao {
 
 		return $f;
 	}
+	function listar_projetos($codigo){
+		require "db_connect.php";
+
+		$prepared = $mysqli->prepare("
+			SELECT 
+			p.nome,
+			p.status,
+			p.descricao,
+			p.concluido,
+			p.deletado_em
+			FROM
+			projetos p
+			JOIN projetos_clientes pc
+			ON p.codigo = pc.cod_projeto
+			and pc.cod_cliente = $codigo
+			");
+
+		$prepared->execute();
+
+		$prepared->bind_result($nome, $status, $descricao, $concluido, $deletado);
+
+		$result =array();
+
+		while($prepared->fetch()){
+
+			$f = array();
+			$f['nome'] = $nome;
+			$f['status'] = $status;
+			$f['descricao'] = $descricao;
+			$f['concluido'] = $concluido;
+			$f['deletado'] = $deletado;
+
+			$result[] = $f;
+		}
+
+		$prepared->close();
+
+		$mysqli->close();
+
+		return $result;
+	}
+
 /*
 	function listar_funcionarios () {
 		require "db_connect.php";

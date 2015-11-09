@@ -75,7 +75,4 @@ function logar(){
 		Header("Location: ../login.php?exist=false");
 	}
 }
-function deletar_funcionario(){
-
-}
 ?>
