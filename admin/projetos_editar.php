@@ -51,7 +51,7 @@ require "sidebar.php";
 						<a href="projetos_listar.php" class="btn btn-primary">Voltar</a>
 
 						<div id="con_ger" class="btn-group" role="group" aria-label="...">
-							<a id="btn_ger_tarefas" href="#" class="btn btn-primary disabled">Gerenciar Tarefas</a>
+							<a id="btn_ger_tarefas" href="projetos_tarefas.php?cod_projeto=<?=$p['codigo']?>" class="btn btn-primary disabled">Gerenciar Tarefas</a>
 							<a href="projetos_participantes.php?cod_projeto=<?=$p['codigo']?>" class="btn_unlock btn btn-primary disabled">Gerenciar Participantes</a>
 						</div>
 						<div id="con_sd" class="btn-group" role="group" aria-label="...">
