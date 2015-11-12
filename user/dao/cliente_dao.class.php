@@ -2,10 +2,11 @@
 class cliente_dao {
 	function salvar_cliente($f){
 		if($f['codigo'] == 0){
-			$this->salvar($f);
+			$resp = $this->salvar($f);
 		}else{
-			$this->atualizar($f);
+			$resp = $this->atualizar($f);
 		}
+		return $resp;
 	}
 	function salvar($f){
 		require "db_connect.php";
@@ -23,20 +24,16 @@ class cliente_dao {
 		$prepared->bind_result($codigo);
 
 		
+		$resposta = array();
 
 		if($prepared->fetch()){
 
 			$resposta['existe'] = true;
 			$prepared->close();
 
-			echo "entrou aki";
-
 		}else{
 
-			echo "entrou aki tbm";
-
-
-			$resposta['existe'] = false;
+			$resposta['existe'] = null;
 			$prepared->close();
 
 			$prepared = $mysqli->prepare("INSERT INTO usuarios SET nome_de_usuario=?, senha=?, bloqueado=false");
@@ -126,16 +123,14 @@ class cliente_dao {
 		SET 
 		c.nome_completo=?, 
 		c.cpf_cnpj=?,  
-		u.nome_de_usuario=?,
 		u.senha=?
 		WHERE
 		c.codigo = ?
 		";
 		$prepared = $mysqli->prepare($query);
-		$prepared->bind_param("ssssi", 
+		$prepared->bind_param("sssi", 
 			$f['nome_completo'],
 			$f['cpf_cnpj'],
-			$f['nome_de_usuario'],
 			$f['senha'],
 			$f['codigo']
 			);
@@ -145,12 +140,11 @@ class cliente_dao {
 
 		session_start();
 
-		$_SESSION["nome_usuario"] = $f['nome_de_usuario'];
 		$_SESSION["nome_cli"] = $f['nome_completo'];
 
 		$mysqli->close();
 
-		$resposta['existe'] = false;
+		$resposta['existe'] = null;
 		$resposta['salvar'] = false;
 		return $resposta;
 	}
@@ -195,6 +189,48 @@ class cliente_dao {
 
 		return $f;
 	}
+	function listar_projetos($codigo){
+		require "db_connect.php";
+
+		$prepared = $mysqli->prepare("
+			SELECT 
+			p.nome,
+			p.status,
+			p.descricao,
+			p.concluido,
+			p.deletado_em
+			FROM
+			projetos p
+			JOIN projetos_clientes pc
+			ON p.codigo = pc.cod_projeto
+			and pc.cod_cliente = $codigo
+			");
+
+		$prepared->execute();
+
+		$prepared->bind_result($nome, $status, $descricao, $concluido, $deletado);
+
+		$result =array();
+
+		while($prepared->fetch()){
+
+			$f = array();
+			$f['nome'] = $nome;
+			$f['status'] = $status;
+			$f['descricao'] = $descricao;
+			$f['concluido'] = $concluido;
+			$f['deletado'] = $deletado;
+
+			$result[] = $f;
+		}
+
+		$prepared->close();
+
+		$mysqli->close();
+
+		return $result;
+	}
+
 /*
 	function listar_funcionarios () {
 		require "db_connect.php";
