@@ -96,7 +96,7 @@ require "verifica.php";
 		}elseif ($nav == "perfil") {
 			include "perfil_cliente.php";
 		}elseif ($nav == "downloads") {
-				//include "downloads_cliente.php";
+			include "downloads_cliente.php";
 
 		}
 		?>

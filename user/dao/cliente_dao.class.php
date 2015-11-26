@@ -8,6 +8,31 @@ class cliente_dao {
 		}
 		return $resp;
 	}
+
+
+	function salvar_respostas($f){
+		require "db_connect.php";
+
+		foreach ($f as $form) {
+			$query = "
+			UPDATE 
+			questoes 
+			SET 
+			resposta=?
+			WHERE
+			codigo = ?
+			";
+			$prepared = $mysqli->prepare($query);
+			$prepared->bind_param("ii",$form['resp'],$form['cod']);
+
+			$prepared->execute();
+			$prepared->close();
+		}
+		$mysqli->close();
+
+	}
+
+
 	function salvar($f){
 		require "db_connect.php";
 
@@ -198,17 +223,24 @@ class cliente_dao {
 			p.status,
 			p.descricao,
 			p.concluido,
-			p.deletado_em
+			d.codigo,
+			d.versao,
+			d.diretorio,
+			d.participantes
 			FROM
 			projetos p
-			JOIN projetos_clientes pc
+			LEFT JOIN
+			downloads d 
+			ON p.codigo = d.cod_projeto
+			JOIN
+			projetos_clientes pc 
 			ON p.codigo = pc.cod_projeto
-			and pc.cod_cliente = $codigo
+			AND pc.cod_cliente = $codigo
 			");
 
 		$prepared->execute();
 
-		$prepared->bind_result($nome, $status, $descricao, $concluido, $deletado);
+		$prepared->bind_result($nome, $status, $descricao, $concluido, $cod_download, $versao, $diretorio, $participantes);
 
 		$result =array();
 
@@ -219,7 +251,10 @@ class cliente_dao {
 			$f['status'] = $status;
 			$f['descricao'] = $descricao;
 			$f['concluido'] = $concluido;
-			$f['deletado'] = $deletado;
+			$f['cod_download'] = $cod_download;
+			$f['versao'] = $versao;
+			$f['diretorio'] = $diretorio;
+			$f['participantes'] = $participantes;
 
 			$result[] = $f;
 		}
@@ -230,6 +265,41 @@ class cliente_dao {
 
 		return $result;
 	}
+	function listar_questoes($codigo){
+		require "db_connect.php";
+
+		$prepared = $mysqli->prepare("
+			SELECT 
+			codigo,
+			titulo,
+			resposta
+			FROM questoes
+			WHERE cod_download = $codigo
+			");
+
+		$prepared->execute();
+
+		$prepared->bind_result($codigo, $titulo,$resposta);
+
+		$result =array();
+
+		while($prepared->fetch()){
+
+			$f = array();
+			$f['codigo'] = $codigo;
+			$f['titulo'] = $titulo;
+			$f['resposta'] =$resposta;
+
+			$result[] = $f;
+		}
+
+		$prepared->close();
+
+		$mysqli->close();
+
+		return $result;
+	}
+
 
 /*
 	function listar_funcionarios () {

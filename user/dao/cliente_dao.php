@@ -12,7 +12,34 @@ if(array_key_exists("op", $_GET)){
 		case 'logar_cliente':
 		logar();
 		break;
+		case 'salvar_respostas':
+		salvar_respostas();
+		break;
 	}
+}
+
+function salvar_respostas(){
+	
+	$f = array();
+
+	if ($_POST['quant']>1) {
+
+		for ($i=1; $i <$_POST['quant'] ; $i++) { 
+			echo $_POST[$i].'<br>';
+
+			list ($cod, $resp) = split ('[-]', $_POST[$i]);
+
+			$var['cod'] = $cod;
+			$var['resp'] =$resp;
+			$f[] = $var;
+		}
+
+		$fdao = new cliente_dao();
+		$resposta = $fdao->salvar_respostas($f);
+
+	}
+	Header("Location: ../area_do_cliente.php?nav=projetos");
+	
 }
 
 function salvar_foto(){
@@ -22,8 +49,6 @@ function salvar_foto(){
 	echo "entrou no metodo";
 
 	if ((isset($_POST["submit"])) && (! empty($_FILES['foto']))){
-
-		echo "entrou";
 
 		$upload = new Upload($_FILES['foto'], 1000, 800, "../img/perfil/");
 		$upload->salvar(); 

@@ -47,7 +47,7 @@ $cod_cli = $_SESSION['cod_cli'];
 						</legend>
 						<div class="row input_row">
 							<div class="col-lg-4"><label>Usuário:</label></div>
-							<div class="col-lg-8"><input disabled id="usuario" name="usuario" type="text" class="form-control" onKeyUp="verifica();"></div>
+							<div class="col-lg-8"><input disabled id="usuario" name="usuario" type="text" class="form-control"></div>
 						</div>
 						<div class="row input_row">
 							<div class="col-lg-4"><label>Senha:</label></div>
@@ -90,18 +90,6 @@ $cod_cli = $_SESSION['cod_cli'];
 					<input type="submit" name='submit' onClick="window.location.reload();" class="btn btn-default"  value="Salvar"/>
 				</div>
 			</form>
-
-			<?php	
-			/*include "dao/upload.class.php"; 
-
-			if ((isset($_POST["submit"])) && (! empty($_FILES['foto']))){
-				
-				$upload = new Upload($_FILES['foto'], 1000, 800, "img/perfil/");
-				$upload->salvar(); 
-			} */
-			?>
-
-
 		</div>
 
 	</div>
@@ -115,7 +103,6 @@ function verifica(){
 	
 	var nome = document.getElementById("nome_cliente").value;
 	var cpf_cnpj = document.getElementById("cpf_cnpj").value;
-	var usuario = document.getElementById("usuario").value;
 	var senha = document.getElementById("senha").value;
 	var r_senha = document.getElementById("r_senha").value;
 
@@ -123,7 +110,7 @@ function verifica(){
 	var btnds = "<button  type='submit' class='btn btn-primary' onClick='window.location.reload()' disabled>Salvar</button><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>Alterar Foto</button>";
 
 
-	if ((nome!="")&&(cpf_cnpj!="")&&(usuario!="")&&(senha!="")) {
+	if ((nome!="")&&(cpf_cnpj!="")&&(senha!="")) {
 
 		if (senha == r_senha) {
 			document.getElementById("r_label").innerHTML = "Repetir Senha: <span class='glyphicon glyphicon-ok' aria-hidden='true' style='color: green;'></span>";
