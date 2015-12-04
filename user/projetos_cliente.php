@@ -6,7 +6,7 @@ $fdao = new cliente_dao();
 $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 
 ?>
-
+<link rel="stylesheet" type="text/css" href="css/chat.css">
 <div class="list-group">
 
 	<?php 
@@ -42,7 +42,7 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 							?>
 							<div class="row">
 								<div class="col-md-offset-9 col-md-1">
-									<a href="#">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseChat<?=$cod?>">
 										<h2>
 											<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 										</h2>
@@ -63,9 +63,9 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 									</a>
 								</div>
 							</div>
-
-
 							<?php 
+							include "chat.php";
+
 							$quant = 1;
 							$quest = $fdao->listar_questoes($p["cod_download"]);
 							?>
@@ -79,7 +79,7 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 												<h4 class="modal-title">Formulário</h4>
 											</div>
 											<div class="modal-body">
-												
+
 												<?php 
 												if ($quest==null) {
 													?>
@@ -167,45 +167,48 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 							?>
 							<div class="row">
 								<div class="col-md-offset-11 col-md-1">
-									<a href="#">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseChat<?=$cod?>">
 										<h2>
 											<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 										</h2>
 									</a>
 								</div>
 							</div>
-							<?php } ?>
-						</div>
+
+							<?php 
+							include "chat.php";
+						} ?>
 					</div>
 				</div>
-
-				<script>
-				$(document).ready(function(){
-					$("#collapse<?=$cod?>").on("hide.bs.collapse", function(){
-						$("#title<?=$cod?>").html('<?= $p["nome"]?>
-							<span class="glyphicon glyphicon-menu-right"></span>');
-					});
-					$("#collapse<?=$cod?>").on("show.bs.collapse", function(){
-						$("#title<?=$cod?>").html('<?= $p["nome"]?>
-							<span class="glyphicon glyphicon-menu-down"></span>');
-					});
-				});
-				</script>
-
-				<?php 
-				$cod ++;
-			}
-		}else{
-			?>
-			<div class="list-group-item">
-				<div  class="list-group-item-heading">
-					<h4 >
-						Sem Projetos Cadastrados
-
-					</h4>
-				</div>
 			</div>
+
+			<script>
+			$(document).ready(function(){
+				$("#collapse<?=$cod?>").on("hide.bs.collapse", function(){
+					$("#title<?=$cod?>").html('<?= $p["nome"]?>
+						<span class="glyphicon glyphicon-menu-right"></span>');
+				});
+				$("#collapse<?=$cod?>").on("show.bs.collapse", function(){
+					$("#title<?=$cod?>").html('<?= $p["nome"]?>
+						<span class="glyphicon glyphicon-menu-down"></span>');
+				});
+			});
+			</script>
+
 			<?php 
+			$cod ++;
 		}
+	}else{
 		?>
-	</div>
+		<div class="list-group-item">
+			<div  class="list-group-item-heading">
+				<h4 >
+					Sem Projetos Cadastrados
+
+				</h4>
+			</div>
+		</div>
+		<?php 
+	}
+	?>
+</div>
