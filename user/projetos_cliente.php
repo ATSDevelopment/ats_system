@@ -31,9 +31,6 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 					<div class="list-group-item-text">
 						<p>
 							Descricao: <?= $p["descricao"]?>
-							<br>
-							Status: <?= $p["status"]?>
-						</p>
 						<hr>
 
 						<?php  

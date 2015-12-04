@@ -220,7 +220,6 @@ class cliente_dao {
 		$prepared = $mysqli->prepare("
 			SELECT 
 			p.nome,
-			p.status,
 			p.descricao,
 			p.concluido,
 			d.codigo,
@@ -238,7 +237,7 @@ class cliente_dao {
 
 		$prepared->execute();
 
-		$prepared->bind_result($nome, $status, $descricao, $concluido, $cod_download, $versao, $diretorio, $participantes);
+		$prepared->bind_result($nome, $descricao, $concluido, $cod_download, $versao, $diretorio, $participantes);
 
 		$result =array();
 
@@ -246,7 +245,6 @@ class cliente_dao {
 
 			$f = array();
 			$f['nome'] = $nome;
-			$f['status'] = $status;
 			$f['descricao'] = $descricao;
 			$f['concluido'] = $concluido;
 			$f['cod_download'] = $cod_download;
