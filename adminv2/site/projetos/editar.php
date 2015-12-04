@@ -105,18 +105,20 @@ require ROOT."/site/sidebar.php";
 				</thead>
 				<tbody id="part_table">
 					<?php
-					foreach ($participantes as $part) {
-						?>
-						<tr>
-							<td>
-								<button onclick="deletar_participante(<?=$part['codigo']?>)">DELETE</button>
-							</td>
-							<td><?=$part['nome_completo']?></td>
-							<td><?=$part['nome_de_usuario']?></td>
-							<td><?=$part['e_mail']?></td>
-							<td><?=$part['telefone']?></td>
-						</tr>
-						<?php
+					if($participantes != null){
+						foreach ($participantes as $part) {
+							?>
+							<tr>
+								<td>
+									<button onclick="deletar_participante(<?=$part['codigo']?>)">DELETE</button>
+								</td>
+								<td><?=$part['nome_completo']?></td>
+								<td><?=$part['nome_de_usuario']?></td>
+								<td><?=$part['e_mail']?></td>
+								<td><?=$part['telefone']?></td>
+							</tr>
+							<?php
+						}
 					}
 					?>
 				</tbody>
@@ -127,7 +129,7 @@ require ROOT."/site/sidebar.php";
 	<fieldset>
 		<legend>Tarefas</legend>
 
-		<a href="editar_tarefa.php?cod_projeto=<?=$projeto['codigo']?>" class="btn btn-primary">Adicionar Tarefa</a> <br /> <br />
+		<button id="btn_add_tarefa" class="btn btn-primary">Adicionar Tarefa</button> <br /> <br />
 
 		<div class="panel panel-default panel-body">
 			<table class="table">
@@ -148,7 +150,7 @@ require ROOT."/site/sidebar.php";
 								</a>
 							</td>
 							<td><?=$tar['nome']?></td>
-							<td><?=$tar['funcionario']?></td>
+							<td><?=$tar['funcionario']['nome_completo']?></td>
 							<td><?=$tar['concluida'] ? "sim":"não"?></td>
 						</tr>
 						<?php

@@ -54,6 +54,14 @@ function update_form_projeto(){
 }
 
 $(document).ready(function(){
+	$("#btn_add_tarefa").click(function(){
+		console.log("clicou")
+		if(projeto != null){
+			location.href="editar_tarefa.php?cod_projeto="+projeto.codigo;
+		}else{
+			alert("Você ainda não salvou o projeto");
+		}
+	});
 	$("#btn_cadastrar_part").click(function(){
 		if(projeto != null){
 			alert = $("#alert_participantes");

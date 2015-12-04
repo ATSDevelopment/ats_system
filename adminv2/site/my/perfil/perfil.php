@@ -22,7 +22,7 @@ $func = $fDao->obter_por_codigo(LOGGED_USER);
 		<div id="f_editor" class="panel panel-default">
 			<div class="panel-body">
 
-				<form name="form_editor" method="post" action="dao.php?f=salvar_perfil?cod_funcionario=<?=$func['codigo']?>">
+				<form name="form_editor" method="post" action="dao.php?f=salvar_perfil&cod_funcionario=<?=$func['codigo']?>">
 
 					<div class="row">
 						<div class="col-lg-7">
@@ -32,16 +32,16 @@ $func = $fDao->obter_por_codigo(LOGGED_USER);
 								</legend>
 								<div class="row input_row">
 									<div class="col-lg-2"><label>Nome:</label></div>
-									<div class="col-lg-10"><input value="<?=$func['nome_completo']?>" type="text" class="form-control"></div>
+									<div class="col-lg-10"><input name="nome_completo" value="<?=$func['nome_completo']?>" type="text" class="form-control"></div>
 								</div>
 								<div class="row input_row">
 									<div class="col-lg-2"><label>E-Mail:</label></div>
-									<div class="col-lg-10"><input value="<?=$func['e_mail']?>" type="text" class="form-control"></div>
+									<div class="col-lg-10"><input name="e_mail" value="<?=$func['e_mail']?>" type="text" class="form-control"></div>
 								</div>
 								<div class="row input_row">
 									<div class="col-lg-2"><label>Telefone:</label></div>
 									<div class="col-lg-10">
-										<input value="<?=$func['telefone']?>" type="text" class="form-control">
+										<input name="telefone" value="<?=$func['telefone']?>" type="text" class="form-control">
 									</div>
 								</div>
 							</fieldset>
@@ -54,11 +54,11 @@ $func = $fDao->obter_por_codigo(LOGGED_USER);
 								</legend>
 								<div class="row input_row">
 									<div class="col-lg-2"><label>Usuário:</label></div>
-									<div class="col-lg-10"><input id="tf_nome_de_usuario" type="text" class="form-control" disabled></div>
+									<div class="col-lg-10"><input value="<?=$func['usuario']['nome_de_usuario']?>" type="text" class="form-control" disabled></div>
 								</div>
 								<div class="row input_row">
 									<div class="col-lg-2"><label>Senha:</label></div>
-									<div class="col-lg-10"><input id="tf_senha" type="password" class="form-control"></div>
+									<div class="col-lg-10"><input name="senha" value="<?=$func['usuario']['senha']?>" type="password" class="form-control"></div>
 								</div>
 							</fieldset>
 						</div>
@@ -66,9 +66,7 @@ $func = $fDao->obter_por_codigo(LOGGED_USER);
 
 					<div id="controls">
 						<div class="btn-group">
-							<a href="listar.php" type="button" class="btn btn-primary">Voltar</a>
-							<button id="btn_deletar" type="button" class="btn btn-primary">Deletar</button>
-							<button id="btn_salvar" type="button" class="btn btn-primary">Salvar</button>
+							<button id="btn_salvar" type="submit" class="btn btn-primary">Salvar</button>
 						</div>
 					</div>
 				</form>
