@@ -31,9 +31,6 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 					<div class="list-group-item-text">
 						<p>
 							Descricao: <?= $p["descricao"]?>
-							<br>
-							Status: <?= $p["status"]?>
-						</p>
 						<hr>
 
 						<?php  
@@ -49,7 +46,7 @@ $projetos = $fdao->listar_projetos($_SESSION["cod_cli"]);
 									</a>
 								</div>
 								<div class="col-md-1">
-									<a href="<?= $p['diretorio']?>" download>
+									<a href="admin/projetos/downloads/files/<?= $p['diretorio']?>" download>
 										<h2>
 											<span class="glyphicon glyphicon-download" aria-hidden="true"></span>
 										</h2>
