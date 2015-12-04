@@ -37,7 +37,7 @@ body{
 												<p>Descrição: <?= $p["descricao"]?><br>Versão: <?= $p["versao"]?></p>
 											</div>
 											<div class="col-md-1">
-												<a href="<?= $p['diretorio']?>" download>
+												<a href="admin/projetos/downloads/files/<?= $p['diretorio']?>" download>
 													<h2>
 														<span class="glyphicon glyphicon-download" aria-hidden="true"></span>
 													</h2>

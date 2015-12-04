@@ -232,10 +232,8 @@ class cliente_dao {
 			LEFT JOIN
 			downloads d 
 			ON p.codigo = d.cod_projeto
-			JOIN
-			projetos_clientes pc 
-			ON p.codigo = pc.cod_projeto
-			AND pc.cod_cliente = $codigo
+			WHERE
+			p.cod_cliente = $codigo
 			");
 
 		$prepared->execute();
