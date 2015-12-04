@@ -218,7 +218,8 @@ class cliente_dao {
 		require "db_connect.php";
 
 		$prepared = $mysqli->prepare("
-			SELECT 
+			SELECT
+			p.codigo, 
 			p.nome,
 			p.descricao,
 			p.concluido,
@@ -237,13 +238,14 @@ class cliente_dao {
 
 		$prepared->execute();
 
-		$prepared->bind_result($nome, $descricao, $concluido, $cod_download, $versao, $diretorio, $participantes);
+		$prepared->bind_result($cod_projeto,$nome, $descricao, $concluido, $cod_download, $versao, $diretorio, $participantes);
 
 		$result =array();
 
 		while($prepared->fetch()){
 
 			$f = array();
+			$f['cod_projeto'] = $cod_projeto;
 			$f['nome'] = $nome;
 			$f['descricao'] = $descricao;
 			$f['concluido'] = $concluido;
