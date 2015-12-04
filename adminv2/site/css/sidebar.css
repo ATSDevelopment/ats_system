@@ -1,0 +1,53 @@
+body {
+	padding-left: 250px;
+}
+
+#sidebar {
+	position: fixed;
+	width: 250px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background-color: black;
+}
+
+#sidebar ul {
+    padding: 0;
+}
+
+#sidebar ul .sidebar_option a, #sidebar ul .sidebar_brand a{
+	display: block;
+	text-decoration: none;
+	padding: 10px;
+	color: #999;
+	text-indent: 15px;
+}
+
+#sidebar ul .sidebar_option.option_active a {
+	color: white;
+	text-indent: 20px;
+}
+
+#sidebar ul .sidebar_option a:hover {
+	text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+#sidebar ul .sidebar_brand {
+	height: 50px;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+#sidebar ul .sidebar_brand a:hover {
+	color: #fff;
+}
+
+#sidebar ul hr {
+	width: 70%;
+}
+
+.sub_body {
+	padding: 10px;
+}
