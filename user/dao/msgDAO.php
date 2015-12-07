@@ -34,8 +34,11 @@ class MensagemDAO {
 		$dao = new cliente_dao();
 
 		foreach ($results as &$r) {
-			$r['usuario'] = $dao->obter_por_codigo($r['usuario']);
+
+			$r['nome_usuario'] = $dao->obter_usuario_por_codigo($r['usuario']);
+			
 		}
+		echo json_encode($results);
 
 		return $results;
 	}

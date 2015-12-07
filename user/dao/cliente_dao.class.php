@@ -215,6 +215,34 @@ class cliente_dao {
 
 		return $f;
 	}
+	function obter_usuario_por_codigo($codigo){
+		require "db_connect.php";
+
+		$prepared = $mysqli->prepare("
+			SELECT 
+			nome_de_usuario
+			FROM usuarios 
+			WHERE 
+			codigo = $codigo 
+			");
+
+		$prepared->execute();
+
+		$prepared->bind_result($nome_de_usuario);
+
+		$f = null;
+
+		if($prepared->fetch()){
+
+			$f = $nome_de_usuario;
+		}
+
+		$prepared->close();
+
+		$mysqli->close();
+
+		return $f;
+	}
 	function listar_projetos($codigo){
 		require "db_connect.php";
 

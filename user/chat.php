@@ -26,7 +26,7 @@ $msgs = $msgdao->listar_mensagens($cod_projeto);
 								<li class="<?=$class?> clearfix">
 									<div class="chat-body clearfix">
 										<div class="header">
-											<strong class="primary-font"><?=$msg['usuario']['nome_de_usuario'].", ".$msg['data'].": "?></strong> 
+											<strong class="primary-font"><?=$msg['nome_usuario'].", ".$msg['data'].": "?></strong> 
 										</div>
 										<p>
 											<?=$msg['conteudo']?>
