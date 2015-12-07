@@ -9,8 +9,8 @@ require ROOT."/site/sidebar.php";
 $cod_projeto = $_GET['cod_projeto'];
 
 $pDao = new ProjetoDAO(get_connection());
-
-$projeto = $pDao->obter_projeto_por_codigo(LOGGED_USER);
+//echo LOGGED_USER;
+$projeto = $pDao->obter_projeto_por_codigo($cod_projeto);
 $parts = $pDao->listar_participantes($cod_projeto);
 $tarefas = $pDao->listar_tarefas($cod_projeto);
 
@@ -46,8 +46,10 @@ $tarefas = $pDao->listar_tarefas($cod_projeto);
 				</div> <br />
 
 				<label>Descrição: </label> <br />
-				<div class="form-control">
-					<?=$projeto['descricao']?>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<?=$projeto['descricao']?>
+					</div>
 				</div> <br />
 			</div>
 		</fieldset>

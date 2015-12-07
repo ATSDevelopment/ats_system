@@ -1,0 +1,13 @@
+body {
+	width: 500px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+
+button {
+	float: right;
+}
+
+table tr td {
+	padding: 5px 0;
+}

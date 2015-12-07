@@ -18,13 +18,20 @@ require ROOT."/site/sidebar.php";
 	<fieldset>
 		<legend>Feedback</legend>
 		<div class="panel panel-default panel-body">
-			<form class="input-group" method="post" action="dao.php?f=salvar_pergunta&cod_projeto=<?=$cod_projeto?>&cod_download=<?=$cod_download?>">
-				<span class="input-group-addon">Adicionar pergunta:</span>
-				<input name="titulo" type="text" class="form-control">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="submit">Adicionar</button>
-				</span>
-			</form> 
+			<div class="row">
+				<div class="col-lg-1">
+					<a href="../listar.php?cod_projeto=<?=$cod_projeto?>" class="btn btn-primary">Voltar</a>
+				</div>
+				<div class="col-lg-11">
+					<form class="input-group" method="post" action="dao.php?f=salvar_pergunta&cod_projeto=<?=$cod_projeto?>&cod_download=<?=$cod_download?>">
+						<span class="input-group-addon">Adicionar pergunta:</span>
+						<input name="titulo" type="text" class="form-control">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">Adicionar</button>
+						</span>
+					</form>
+				</div>
+			</div>
 		</div>
 
 		<div class="panel panel-default">

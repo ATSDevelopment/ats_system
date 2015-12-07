@@ -143,6 +143,8 @@ $(document).ready(function(){
 
 			if(status == "success"){
 				projeto = resp.json;
+
+				$(".locks").attr("disabled", false);
 			}else{
 				alert.attr("class", "alert alert-error")
 				alert.html(resp.message);

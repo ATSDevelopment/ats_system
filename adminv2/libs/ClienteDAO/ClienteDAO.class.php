@@ -13,9 +13,9 @@ class ClienteDAO {
 	}
 
 	function obter_por_codigo($codigo){
-		$prepared = $this->mysqli->prepare("SELECT nome_completo, cpf_cnpj, tipo_pessoa, cod_usuario FROM clientes WHERE codigo=$codigo");
+		$prepared = $this->mysqli->prepare("SELECT nome_completo, cpf_cnpj, cod_usuario FROM clientes WHERE codigo=$codigo");
 		$prepared->execute();
-		$prepared->bind_result($nome_completo, $cpf_cnpj, $tipo_pessoa, $cod_usuario);
+		$prepared->bind_result($nome_completo, $cpf_cnpj, $cod_usuario);
 
 		$result = null;
 		if($prepared->fetch()){
@@ -23,7 +23,6 @@ class ClienteDAO {
 				'codigo' => $codigo,
 				'nome_completo' => $nome_completo,
 				'cpf_pnpj' => $cpf_cnpj,
-				'tipo_pessoa' => $tipo_pessoa,
 				'usuario' => $cod_usuario
 				);
 		}

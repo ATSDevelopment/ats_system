@@ -1,6 +1,6 @@
 <?php
 define("ROOT", "../../..");
-define("NAV", "side_btn_pf");
+define("NAV", "side_btn_ep");
 
 require ROOT."/libs/lib_list.php";
 require ROOT."/site/header.php";

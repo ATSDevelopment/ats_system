@@ -57,8 +57,8 @@ require ROOT."/site/sidebar.php";
 				<div id="controls_padding" class="col-lg-4">
 					<div class="btn-group">
 						<a href="listar.php" class="btn btn-primary">Voltar</a>
-						<a href="downloads/listar.php?cod_projeto=<?=$projeto['codigo']?>" class="btn btn-primary">Downloads</a>
-						<button id="btn_deletar" type="button" class="btn btn-primary">Deletar</button>
+						<a href="downloads/listar.php?cod_projeto=<?=$projeto['codigo']?>" class="btn btn-primary locks" disabled>Downloads</a>
+						<button id="btn_deletar" type="button" class="btn btn-primary locks" disabled>Deletar</button>
 						<button id="btn_salvar" type="button" class="btn btn-primary">Salvar</button>
 					</div>
 				</div>
@@ -129,7 +129,7 @@ require ROOT."/site/sidebar.php";
 	<fieldset>
 		<legend>Tarefas</legend>
 
-		<button id="btn_add_tarefa" class="btn btn-primary">Adicionar Tarefa</button> <br /> <br />
+		<button id="btn_add_tarefa" class="btn btn-primary locks" disabled>Adicionar Tarefa</button> <br /> <br />
 
 		<div class="panel panel-default panel-body">
 			<table class="table">
@@ -172,6 +172,8 @@ if($projeto != null){
 		projeto = JSON.parse('<?=json_encode($projeto)?>');
 
 		update_form_projeto();
+
+		$(".locks").attr("disabled", false);
 	</script>
 	<?php
 }

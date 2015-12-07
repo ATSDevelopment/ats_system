@@ -5,6 +5,17 @@ class FuncionarioDAO {
 		$this->mysqli = $mysqli;
 	}
 
+	function auth($nome_de_usuario, $senha){
+		$prepared = $this->mysqli->prepare("SELECT f.codigo FROM funcionarios f JOIN usuarios u ON u.codigo = f.cod_usuario WHERE u.nome_de_usuario=? AND u.senha=?");
+		$prepared->bind_param("ss", $nome_de_usuario, $senha);
+		$prepared->execute();
+		$prepared->bind_result($codigo);
+		$prepared->fetch();
+		$prepared->close();
+
+		return $codigo;
+	}
+
 	function listar_funcionarios($search){
 		$q = "SELECT f.codigo, f.nome_completo, f.e_mail, f.telefone, f.observacoes, f.ativo, f.cod_usuario , p.gerenciar_funcionarios, p.gerenciar_projetos, p.gerenciar_downloads, p.gerenciar_clientes, p.gerenciar_noticias FROM funcionarios f JOIN permissoes p ON p.cod_funcionario = f.codigo JOIN usuarios u ON u.codigo=f.cod_usuario WHERE deletado_em IS NULL";
 		if($search != null){
@@ -129,7 +140,7 @@ class FuncionarioDAO {
 		$nome_completo = $f['nome_completo'];
 		$e_mail = $f['e_mail'];
 		$telefone = $f['telefone'];
-		$observacoes = $f['observacoes'];
+		$observacoes = str_replace("\n", "", str_replace("\t", "", $f['observacoes']));
 		$ativo = $f['ativo'] ? 1:0;
 		$cod_usuario = $f['usuario']['codigo'];
 

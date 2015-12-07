@@ -9,5 +9,15 @@
 </head>
 <body>
 <?php
-define("LOGGED_USER", 1);
+session_start();
+
+if(!defined("ROOT")){
+	define("ROOT", "../");
+}
+
+if(!(array_key_exists("USER_ID", $_SESSION) && $_SESSION['USER_ID'] != 0)){
+	header("Location: ".ROOT."/site/login/login.php");
+}else{
+	define("LOGGED_USER", $_SESSION['USER_ID']);
+}
 ?>

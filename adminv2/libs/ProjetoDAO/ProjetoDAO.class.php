@@ -115,7 +115,7 @@ class ProjetoDAO{
 		$codigo = $t['codigo'];
 		$cod_projeto = $t['cod_projeto'];
 		$nome = $t['nome'];
-		$descricao = $t['descricao'];
+		$descricao = str_replace("\n", "", str_replace("\t", "", $t['descricao']));
 		$concluida = $t['concluida'] ? 1:0;
 		$cod_funcionario = $t['cod_funcionario'];
 
@@ -244,7 +244,7 @@ class ProjetoDAO{
 
 		$codigo = $p['codigo'];
 		$nome = $p['nome_completo'];
-		$descricao = $p['descricao'];
+		$descricao = str_replace("\n", "", str_replace("\t", "", $p['descricao']));
 		$concluido = $p['concluido']=="true" ? 1:0;
 		$cod_cliente = $p['cod_cliente'];
 
