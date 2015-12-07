@@ -9,7 +9,7 @@ require ROOT."/site/sidebar.php";
 $cod_projeto = $_GET['cod_projeto'];
 
 $pDao = new ProjetoDAO(get_connection());
-//echo LOGGED_USER;
+
 $projeto = $pDao->obter_projeto_por_codigo($cod_projeto);
 $parts = $pDao->listar_participantes($cod_projeto);
 $tarefas = $pDao->listar_tarefas($cod_projeto);
@@ -28,8 +28,10 @@ $tarefas = $pDao->listar_tarefas($cod_projeto);
 					<div class="col-lg-1">
 						<a href="listar_projetos.php?cod_projeto=<?=$projeto['codigo']?>" class="btn btn-primary">Voltar</a>
 					</div>
-
-					<div class="col-lg-6">
+					<div class="col-lg-1">
+						<a href="chat/chat.php?cod_projeto=<?=$projeto['codigo']?>" class="btn btn-primary">CHAT</a>
+					</div>
+					<div class="col-lg-5">
 						<div class="input-group">
 							<span class="input-group-addon">Nome do Projeto:</span>
 							<input type="text" class="form-control" value="<?=$projeto['nome']?>">

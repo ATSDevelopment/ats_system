@@ -1,5 +1,5 @@
 <?php
-define("ROOT", "../../..");
+define("ROOT", "../../../..");
 
 require ROOT."/libs/lib_list.php";
 

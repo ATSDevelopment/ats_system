@@ -1,5 +1,5 @@
 <?php
-define("ROOT", "../../..");
+define("ROOT", "../../../..");
 define("NAV", "side_btn_p");
 
 require ROOT."/libs/lib_list.php";
@@ -40,12 +40,15 @@ $msgs = $msDao->listar_mensagens($cod_projeto);
 			</div>
 
 			<div class="panel panel-default">
-				<form class="input-group" method="post" action='<?="dao.php?cod_projeto=$cod_projeto&cod_usuario=".LOGGED_USER?>'>
-					<textarea name="conteudo" ></textarea>
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit">Enviar</button>
-					</span>
-				</form>
+				<div class="panel-body">
+					<form class="input-group" method="post" action='<?="dao.php?cod_projeto=$cod_projeto&cod_usuario=".LOGGED_USER?>'>
+						<textarea id="area_conteudo" name="conteudo"></textarea>
+						<span id="controls" class="btn-group">
+							<a class="btn btn-default" type="submit">Enviar</a>
+							<button class="btn btn-default" type="submit">Enviar</button>
+						</span>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

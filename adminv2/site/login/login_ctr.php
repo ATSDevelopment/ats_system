@@ -19,7 +19,7 @@ $f = array(
 
 			session_commit();
 
-			header("Location: ".ROOT."/site/funcionarios/listar.php");
+			header("Location: ".ROOT."/site/my/projects/listar_projetos.php");
 		}else{
 
 			header("Location: ".ROOT."/site/login/login.php?error=true");
