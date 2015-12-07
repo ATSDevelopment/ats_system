@@ -1,4 +1,5 @@
 <?php
+
 class cliente_dao {
 	function salvar_cliente($f){
 		if($f['codigo'] == 0){
@@ -299,49 +300,5 @@ class cliente_dao {
 	}
 
 
-/*
-	function listar_funcionarios () {
-		require "db_connect.php";
-
-		$prepared = $mysqli->prepare("
-			SELECT
-			f.codigo,
-			f.nome_completo,
-			f.e_mail,
-			f.telefone,
-			u.nome_de_usuario,
-			u.bloqueado
-			FROM
-			funcionarios f
-			join usuarios u
-			on f.cod_usuario = u.codigo
-			WHERE 
-			f.deletado_em IS NULL
-			");
-
-		$prepared->execute();
-
-		$prepared->bind_result($codigo, $nome_completo, $e_mail, $telefone, $nome_de_usuario, $bloqueado);
-
-		$result = array();
-
-		while($prepared->fetch()){
-			$f = array();
-			$f['codigo'] = $codigo;
-			$f['nome_completo'] = $nome_completo;
-			$f['e_mail'] = $e_mail;
-			$f['telefone'] = $telefone;
-			$f['nome_de_usuario'] = $nome_de_usuario;
-			$f['bloqueado'] = $bloqueado;
-
-			$result[] = $f;
-		}
-
-		$prepared->close();
-
-		$mysqli->close();
-
-		return $result;
-	}*/
 }
 ?>

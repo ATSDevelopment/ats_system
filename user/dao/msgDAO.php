@@ -31,10 +31,11 @@ class MensagemDAO {
 
 		$prepared->close();
 
-		/*$dao = new UsuarioDAO();
+		$dao = new cliente_dao();
+
 		foreach ($results as &$r) {
 			$r['usuario'] = $dao->obter_por_codigo($r['usuario']);
-		}*/
+		}
 
 		return $results;
 	}
