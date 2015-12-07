@@ -101,11 +101,11 @@ class FuncionarioDAO {
 				'ativo' => $ativo ? true:false,
 				'usuario' => $cod_usuario,
 				'permissoes' => array(
-					'gf' => $gf ? true:false,
-					'gp' => $gp ? true:false,
-					'gd' => $gd ? true:false,
-					'gc' => $gc ? true:false,
-					'gn' => $gn ? true:false
+					'gf' => $gf == 1,
+					'gp' => $gp == 1,
+					'gd' => $gd == 1,
+					'gc' => $gc == 1,
+					'gn' => $gn == 1
 					)
 				);
 
@@ -168,11 +168,13 @@ class FuncionarioDAO {
 
 		$prepared = $this->mysqli->prepare($q);
 
-		$gf = $f['permissoes']['gf'] ? 1:0;
-		$gp = $f['permissoes']['gp'] ? 1:0;
-		$gd = $f['permissoes']['gd'] ? 1:0;
-		$gc = $f['permissoes']['gc'] ? 1:0;
-		$gn = $f['permissoes']['gn'] ? 1:0;
+		var_dump($f['permissoes']);
+
+		$gf = $f['permissoes']['gf'] == "true" ? 1:0;
+		$gp = $f['permissoes']['gp'] == "true" ? 1:0;
+		$gd = $f['permissoes']['gd'] == "true" ? 1:0;
+		$gc = $f['permissoes']['gc'] == "true" ? 1:0;
+		$gn = $f['permissoes']['gn'] == "true" ? 1:0;
 
 		if($codigo == 0){
 			$prepared->bind_param("iiiiii", $f['codigo'], $gf, $gp, $gd, $gc, $gn);

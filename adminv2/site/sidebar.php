@@ -2,7 +2,6 @@
 
 $fDao = new FuncionarioDAO(get_connection());
 $f = $fDao->obter_por_codigo(LOGGED_USER);
-
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?=ROOT.'/site/css/sidebar.css'?>">
@@ -18,26 +17,34 @@ $f = $fDao->obter_por_codigo(LOGGED_USER);
 		<hr>
 
 		<?php
-		if($f['permissoes']['gf']){
-			?>
-			<li class="sidebar_option side_btn_f">
-				<a href="<?=ROOT.'/site/funcionarios/listar.php'?>">Funcionarios</a>
-			</li>
-			<?php
-		}
+		if($f['permissoes']['gf'] || $f['permissoes']['gp'] || $f['permissoes']['gc']){
+			if($f['permissoes']['gf']){
+				?>
+				<li class="sidebar_option side_btn_f">
+					<a href="<?=ROOT.'/site/funcionarios/listar.php'?>">Funcionarios</a>
+				</li>
+				<?php
+			}
 
-		if($f['permissoes']['gp']){
-			?>
-			<li class="sidebar_option side_btn_p">
-				<a href="<?=ROOT.'/site/projetos/listar.php'?>">Projetos</a>
-			</li>
-			<?php
-		}
+			if($f['permissoes']['gp']){
+				?>
+				<li class="sidebar_option side_btn_p">
+					<a href="<?=ROOT.'/site/projetos/listar.php'?>">Projetos</a>
+				</li>
+				<?php
+			}
 
-		if($f['permissoes']['gc']){
+			if($f['permissoes']['gc']){
+				?>
+				<li class="sidebar_option side_btn_c">
+					<a href="<?=ROOT.'/site/clientes/listar.php'?>">Clientes</a>
+				</li>
+				<?php
+			}
+		}else{
 			?>
-			<li class="sidebar_option side_btn_c">
-				<a href="<?=ROOT.'/site/clientes/listar.php'?>">Clientes</a>
+			<li class="sidebar_option">
+				<a href="#">Sem Permissões</a>
 			</li>
 			<?php
 		}

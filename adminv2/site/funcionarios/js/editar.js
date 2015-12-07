@@ -85,6 +85,8 @@ $(document).ready(function(){
 				gn: document.getElementById("gn").checked,
 			}
 		};
+
+		console.log(func);
 		
 		url = api_url+"?f=salvar_funcionario";
 
