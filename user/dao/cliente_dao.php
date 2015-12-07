@@ -114,6 +114,7 @@ function salvarMsg(){
 
 		$dao = new MensagemDAO();
 		$dao->salvar_mensagem($msg);
+		Header("Location: ../area_do_cliente.php?nav=projetos");
 	}
 
 ?>

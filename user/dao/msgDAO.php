@@ -38,8 +38,6 @@ class MensagemDAO {
 			$r['nome_usuario'] = $dao->obter_usuario_por_codigo($r['usuario']);
 			
 		}
-		echo json_encode($results);
-
 		return $results;
 	}
 }
