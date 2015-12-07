@@ -15,6 +15,9 @@ if(array_key_exists("op", $_GET)){
 		case 'salvar_respostas':
 		salvar_respostas();
 		break;
+		case 'salvar_msg':
+		salvarMsg();
+		break;
 	}
 }
 
@@ -98,6 +101,19 @@ function logar(){
 	}else{
 
 		Header("Location: ../login.php?exist=false");
-	}
+	}	
 }
+function salvarMsg(){
+	require"msgDAO.php";
+
+		$msg = array(
+			'cod_projeto' => $_GET['cod_projeto'],
+			'cod_usuario' => $_GET['cod_usuario'],
+			'conteudo' => str_replace("\n", "", str_replace("\t", "", $_POST['conteudo']))
+			);
+
+		$dao = new MensagemDAO();
+		$dao->salvar_mensagem($msg);
+	}
+
 ?>

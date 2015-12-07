@@ -1,3 +1,56 @@
+<?php 
+
+$cod_projeto =$p['cod_projeto'];
+$id_usuario = $_SESSION['id_usuario'];
+$cliente = $fdao->obter_por_codigo($id_usuario);
+
+require "dao/msgDAO.php";
+
+
+$msgdao = new MensagemDAO();
+$msgs = $msgdao->listar_mensagens($cod_projeto);
+?>
+
+<link rel="stylesheet" type="text/css" href="css/chat.css">
+
+<div id="chat_panel" class="sub_body">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<?php
+					foreach ($msgs as $msg) {
+						$class = ($msg['usuario']['codigo'] == $cliente['codigo'] ? "alert-success":"alert-info");
+						?>
+						<div class="alert <?=$class?>">
+							<strong><?=$msg['usuario']['nome_de_usuario'].", ".$msg['data'].": "?></strong>
+							<br />
+							<?=$msg['conteudo']?>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<form class="input-group" method="post" action='<?="dao/cliente_dao.php?op=salvar_msg&cod_projeto=$cod_projeto&cod_usuario=".$id_usuario?>'>
+					<textarea name="conteudo" ></textarea>
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">Enviar</button>
+					</span>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<?php /*
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-7">
@@ -48,3 +101,5 @@
 		</div>
 	</div>
 </div>
+*/
+ ?>
