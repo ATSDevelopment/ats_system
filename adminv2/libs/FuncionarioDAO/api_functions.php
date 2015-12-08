@@ -2,11 +2,11 @@
 $api['salvar_funcionario'] = function(){
 	$dao = new FuncionarioDAO(get_connection());
 	
-	$f['permissoes']['gf'] = $f['permissoes']['gf'] == "true";
+/*	$f['permissoes']['gf'] = $f['permissoes']['gf'] == "true";
 	$f['permissoes']['gp'] = $f['permissoes']['gp'] == "true";
 	$f['permissoes']['gd'] = $f['permissoes']['gd'] == "true";
 	$f['permissoes']['gc'] = $f['permissoes']['gc'] == "true";
-	$f['permissoes']['gn'] = $f['permissoes']['gn'] == "true";
+	$f['permissoes']['gn'] = $f['permissoes']['gn'] == "true";*/
 
 	$dao->salvar_funcionario($_POST);
 

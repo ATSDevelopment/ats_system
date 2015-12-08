@@ -4,8 +4,6 @@ $cod_projeto =$p['cod_projeto'];
 $id_usuario = $_SESSION['id_usuario'];
 $cliente = $fdao->obter_por_codigo($id_usuario);
 
-require "dao/msgDAO.php";
-
 
 $msgdao = new MensagemDAO();
 $msgs = $msgdao->listar_mensagens($cod_projeto);

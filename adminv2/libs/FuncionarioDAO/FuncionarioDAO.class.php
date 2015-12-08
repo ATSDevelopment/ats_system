@@ -168,8 +168,6 @@ class FuncionarioDAO {
 
 		$prepared = $this->mysqli->prepare($q);
 
-		var_dump($f['permissoes']);
-
 		$gf = $f['permissoes']['gf'] == "true" ? 1:0;
 		$gp = $f['permissoes']['gp'] == "true" ? 1:0;
 		$gd = $f['permissoes']['gd'] == "true" ? 1:0;

@@ -1,5 +1,7 @@
 <?php 
 require "dao/cliente_dao.class.php";
+require "dao/msgDAO.php";
+
 
 $fdao = new cliente_dao();
 
